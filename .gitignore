@@ -2,6 +2,7 @@ docs/html
 docs/tagfile.xml
 docs/*.tag
 
+*.csv
 raw/
 OLD/
 

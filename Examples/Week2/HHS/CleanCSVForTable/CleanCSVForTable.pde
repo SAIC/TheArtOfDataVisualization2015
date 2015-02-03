@@ -1,7 +1,7 @@
 import java.io.*;
 
-String inputCSVFile = "Food_Inspections_FULL.csv";
-String outputCSVFile = "Food_Inspections_FULL_Clean.csv";
+String inputCSVFile = "Food_Inspections_FailedDroppings.csv";
+String outputCSVFile = "Food_Inspections_FailedDroppings_Clean.csv";
 
 try {
   // Create an opencsv reader.
@@ -46,16 +46,16 @@ catch (IOException e)
 
 // Test reading it into a processing Table.
 
-println("Loading into Table ...");
-Table table = loadTable(outputCSVFile, "header");
-
-println("Removing columns ...");
-table.removeColumn("Location");
-table.removeColumn("Address");
-table.removeColumn("City");
-table.removeColumn("State");
-
-println("Saving new CSV ...");
-saveTable(table, "data/Refined.csv");
-println("Done!");
+//println("Loading into Table ...");
+//Table table = loadTable(outputCSVFile, "header");
+//
+//println("Removing columns ...");
+//table.removeColumn("Location");
+//table.removeColumn("Address");
+//table.removeColumn("City");
+//table.removeColumn("State");
+//
+//println("Saving new CSV ...");
+//saveTable(table, "data/Refined.csv");
+//println("Done!");
 
