@@ -20,6 +20,7 @@ Location chicago = new Location(41.83, -87.68);
 
 Table table;
 
+float angle = 0;
 
 void setup() {
   size(800, 600, P2D);
@@ -36,6 +37,8 @@ void setup() {
 void draw() {
   background(0);
   map.draw();
+  
+  angle += 1;
 
   for (TableRow row : table.rows ())
   {
@@ -45,22 +48,40 @@ void draw() {
     // Zoom dependent marker size
     ScreenPosition pos = map.getScreenPosition(loc);
 
-    String riskString = row.get("Risk");
+    String riskString = row.getString("Risk");
 
-    if (riskString == "Risk 1 (High)")
+    float ellipseSize = 10;
+
+    if (riskString.equals("Risk 1 (High)"))
     {
       // High risk is red!
       fill(200, 0, 0, 100);
+      ellipseSize = 30;
+    }
+    else if(riskString.equals("Risk 2 (Medium)"))
+    {
+      // Medium risk is yellow!
+      fill(200, 255, 0, 100);
+      ellipseSize = 10;
     }
     else 
     {
-      // High risk is red!
-      fill(200, 255, 0, 100);
+      // low risk is green!
+      fill(0, 255, 0, 100);
+      ellipseSize = 5;
     }
     
     
     noStroke();
-    ellipse(pos.x, pos.y, 10, 10);
+    ellipse(pos.x, pos.y, ellipseSize, ellipseSize);
+    
+    stroke(0);
+    pushMatrix();
+    translate(pos.x, pos.y);
+    rotate(radians(angle));
+    line(0, 0, 30, 0);
+    popMatrix();
+    
   }
 }
 
