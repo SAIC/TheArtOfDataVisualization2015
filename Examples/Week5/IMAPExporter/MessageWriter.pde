@@ -1,15 +1,17 @@
 import java.text.SimpleDateFormat;
 
 // Output the array of recipients' email addresses with spaces between.
-public String recipientsToString(Address[] recipients)
+public String addressesToString(Address[] addresses)
 {
+  if (addresses == null) return "";
+  
   StringBuffer sb = new StringBuffer();
 
-  for (int i = 0; i < recipients.length; ++i)
+  for (int i = 0; i < addresses.length; ++i)
   {
-    sb.append(recipients[i]);
+    sb.append(((InternetAddress)addresses[i]).getAddress());
 
-    if (i < recipients.length - 1) 
+    if (i < addresses.length - 1) 
     {
       sb.append(" ");
     }
@@ -27,8 +29,7 @@ public Address[] stringToAddresses(String addressString)
 
   for (int i = 0; i < tokens.length; ++i)
   {
-    println(addresses);
-//    addresses[i] = new Address(tokens[i]);
+    addresses[i] = new InternetAddress(tokens[i]);
   }
 
   return addresses;
@@ -47,6 +48,10 @@ public void messagesToCSV(Message[] messages, String filename)
     table.addColumn("threadId");
     table.addColumn("receivedDate");
     table.addColumn("sentDate");
+    table.addColumn("subject");
+    table.addColumn("to");
+    table.addColumn("cc");
+    table.addColumn("from");
 
     println("Writing messages: ");
 
@@ -64,6 +69,11 @@ public void messagesToCSV(Message[] messages, String filename)
       newRow.setString("threadId", ""+m.getThrId());
       newRow.setString("sentDate", dateFormatter.format(sentDate));
       newRow.setString("receivedDate", dateFormatter.format(receivedDate));
+      newRow.setString("subject", m.getSubject());
+      
+      newRow.setString("from", addressesToString(m.getFrom()));
+      newRow.setString("to", addressesToString(m.getRecipients(Message.RecipientType.TO)));
+      newRow.setString("cc", addressesToString(m.getRecipients(Message.RecipientType.CC)));
     }
 
     // Save all of the data.
