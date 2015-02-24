@@ -64,6 +64,8 @@ class IMAPClient {
     fetchProfile.add(FetchProfile.Item.FLAGS);
     fetchProfile.add(FetchProfile.Item.CONTENT_INFO);
     fetchProfile.add("X-mailer");
+    fetchProfile.add("In-Reply-To");
+    fetchProfile.add("Message-ID");
 
     // The following are GMail-specific custom headers. 
     fetchProfile.add(GmailFolder.FetchProfileItem.MSGID);
