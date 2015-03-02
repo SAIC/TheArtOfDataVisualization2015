@@ -71,20 +71,18 @@ for (int i = 0; i < hoursInDay; ++i)
 }
 
 
-float yStep = height / float(hoursInDay);
-
 for (int i = 0; i < hoursInDay; ++i)
 {
   int count = sendCountsByHour.get(str(i));
-
+  
   float mappedCount = count / float(maxCount); // Normalize the number to range 0-1.
-
+  
   pushMatrix();
-  translate(0, yStep * i + 5);
-  fill(255);
-  rect(25, 0, (width - 30) * mappedCount, 10);
-  fill(255, 0, 0);
-  text(str(i), 5, 10);
+  translate(width / 2, height / 2);
+  rotate(radians(float(i) / hoursInDay * 360.0));
+  rect(10, -5, 300 * mappedCount, 10);
+  text(str(i), 300 * mappedCount, 0);
   popMatrix();
+  
 }
 
