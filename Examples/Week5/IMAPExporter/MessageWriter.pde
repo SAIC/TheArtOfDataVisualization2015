@@ -1,5 +1,23 @@
 import java.text.SimpleDateFormat;
 
+public String arrayToString(String[] strings)
+{
+  StringBuffer sb = new StringBuffer();
+
+  for (int i = 0; i < strings.length; ++i)
+  {
+    sb.append(strings[i]);
+
+    if (i < strings.length - 1) 
+    {
+      sb.append(" ");
+    }
+  }
+
+  return sb.toString();
+}
+
+
 // Output the array of recipients' email addresses with spaces between.
 public String addressesToString(Address[] addresses)
 {
@@ -148,19 +166,17 @@ public void messagesToCSV(Message[] messages, String filename)
 
         if (inReplyTo.length > 1)
         {
-          pritnln("inReplyTo.length=" + inReplyTo.length);
+          println("inReplyTo.length=" + inReplyTo.length);
         }
       } else
       {
         println("inReplyTo = null");
       }
 
-      String[] messageID = m.getHeader("Message-ID"))
+      String[] messageID = m.getHeader("Message-ID");
 
-
-
-        newRow.setString("inReplyTo", m.getHeader("In-Reply-To"));
-      newRow.setString("message-ID", m.getHeader("Message-ID"));
+      newRow.setString("inReplyTo", arrayToString(m.getHeader("In-Reply-To")));
+      newRow.setString("message-ID", arrayToString(m.getHeader("Message-ID")));
 
       StringBuffer sb = new StringBuffer();
 
