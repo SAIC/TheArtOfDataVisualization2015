@@ -2,6 +2,8 @@ import java.text.SimpleDateFormat;
 
 public String arrayToString(String[] strings)
 {
+  if (strings == null) return "";
+
   StringBuffer sb = new StringBuffer();
 
   for (int i = 0; i < strings.length; ++i)
