@@ -7,6 +7,9 @@ class EmailArchive {
   // Column 2 is our thread statistics class (see ThreadStatistics below)
   HashMap<Long, EmailThread> threads;
 
+  long startTime = Long.MAX_VALUE;
+  long stopTime = Long.MIN_VALUE;
+
   // Constructor
   EmailArchive()
   {
@@ -31,6 +34,19 @@ class EmailArchive {
 
     // Put the thread entry back in the hash map.
     threads.put(threadId, thread);
+
+    if (time.getMillis() > stopTime)
+    {
+      stopTime = time.getMillis();
+    } else if (time.getMillis() < startTime)
+    {
+      startTime = time.getMillis();
+    }
+  }
+  
+  Duration getDuration()
+  {
+     return new Duration(new DateTime(startTime), new DateTime(stopTime)); 
   }
 
   Collection<EmailThread> getThreads() 
@@ -101,7 +117,7 @@ class EmailThread {
 
   long getId()
   {
-     return threadId; 
+    return threadId;
   }
 
   void add(DateTime time)
@@ -115,7 +131,7 @@ class EmailThread {
 
   ArrayList<DateTime> getMessages()
   {
-     return messages; 
+    return messages;
   }
 
   // Get the number of messages that have been added to this thread.
