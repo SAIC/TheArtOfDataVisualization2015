@@ -47,6 +47,18 @@ void setup() {
   println("Archive Duration: " + (stopTime - startTime));
   println("Shortest thread: " + threads.getShortestThreadId());
   println("Longest thread: " + threads.getLongestThreadId());
+
+  for (EmailThread thread : threads.getThreads ())
+  {
+    if (thread.getCount() > 1)
+    {
+      println("Thread ID: " + thread.getId());
+      for (DateTime message : thread.getMessages ())
+      {
+        println("\t" + message.toString(dateFormat));
+      }
+    }
+  }
 }
 
 void draw()

@@ -74,7 +74,7 @@ class EmailArchive {
     return threadId;
   }
 
-
+  // Return a single thread based on its id.
   EmailThread getThread(long threadId) {
     return threads.get(threadId);
   }
@@ -91,54 +91,45 @@ class EmailArchive {
 class EmailThread {
   long threadId;
 
-  // The first message in the thread.
-  DateTime first;
-
-  // The last message in the thread.
-  DateTime last;
-
-  // The number of messages in this thread.
-  long count;
+  ArrayList<DateTime> messages;
 
   EmailThread(long threadId) 
   {
     this.threadId = threadId;
-    this.first = null;
-    this.last = null;
+    this.messages = new ArrayList<DateTime>();
+  }
+
+  long getId()
+  {
+     return threadId; 
   }
 
   void add(DateTime time)
   {
     if (time != null)
     {
-      long timeMillis = time.getMillis();
-
-      if (first == null && last == null)
-      {
-        first = new DateTime(timeMillis);
-        last = new DateTime(timeMillis);
-      } else if (timeMillis > last.getMillis()) {
-        last = new DateTime(timeMillis);
-      } else if (timeMillis < time.getMillis()) {
-        first = new DateTime(timeMillis);
-      }
-
-      count++;
+      messages.add(time);
+      Collections.sort(messages);
     }
+  }
+
+  ArrayList<DateTime> getMessages()
+  {
+     return messages; 
   }
 
   // Get the number of messages that have been added to this thread.
   long getCount() {
-    return count;
+    return messages.size();
   }
 
   // Get the duration of the thread.
   Duration getDuration() {
-    if (first == null || last == null) 
+    if (messages.size() > 0)
     {
-      return Duration.ZERO;
+      return new Duration(messages.get(0), messages.get(messages.size() - 1));
     } else {
-      return new Duration(first, last);
+      return Duration.ZERO;
     }
   }
 }
